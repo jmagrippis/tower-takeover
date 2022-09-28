@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 
-const SPEED: float = 700.0
-const JUMP_VELOCITY: float = -800.0
+const SPEED: float = 255.0
+const JUMP_VELOCITY: float = -350.0
 const FALL_GRAVITY_FACTOR: float = 1.40
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -19,7 +19,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y += gravity * delta * FALL_GRAVITY_FACTOR	
+		velocity.y += gravity * delta * FALL_GRAVITY_FACTOR
 
 	# Handle attack.
 	if Input.is_action_just_pressed("attack"):
@@ -27,7 +27,10 @@ func _physics_process(delta: float) -> void:
 		
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		if Input.is_action_pressed("down"):
+			drop()
+		else:
+			velocity.y = JUMP_VELOCITY
 
 	# Flip sprite according to whether we are "looking" left or right
 	if velocity.x > 0:
@@ -60,9 +63,17 @@ func _physics_process(delta: float) -> void:
 		recently_airborne = true
 		
 	move_and_slide()
-
-
+	
+	
 func attack() -> void:
 	animation_tree.set("parameters/attacking/current", 1)
 	await get_tree().create_timer(0.35).timeout
 	animation_tree.set("parameters/attacking/current", 0)
+
+
+func drop() -> void:
+	animation_tree.set("parameters/movement/current", 2)
+	await get_tree().create_timer(0.05).timeout
+	velocity.y = -JUMP_VELOCITY
+	position.y += 1
+	

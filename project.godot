@@ -8,6 +8,22 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "Area2D",
+"class": &"HitBox",
+"language": &"GDScript",
+"path": "res://Characters/HitBox.gd"
+}, {
+"base": "Area2D",
+"class": &"HurtBox",
+"language": &"GDScript",
+"path": "res://Characters/HurtBox.gd"
+}]
+_global_script_class_icons={
+"HitBox": "",
+"HurtBox": ""
+}
+
 [application]
 
 config/name="Tower Takeover"
@@ -62,10 +78,11 @@ attack={
 [layer_names]
 
 2d_physics/layer_1="World"
+2d_physics/layer_2="Hitboxes"
 
 [physics]
 
-2d/default_gravity=1700.0
+2d/default_gravity=1200.0
 
 [rendering]
 
