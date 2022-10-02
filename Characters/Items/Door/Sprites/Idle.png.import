@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btnx3i5bmda5f"
-path="res://.godot/imported/Door In (78x58).png-cae3bc5f0d2e899c8c6d9afb200ada43.ctex"
+uid="uid://d1glmrqalo0eg"
+path="res://.godot/imported/Idle.png-058aef4d86f61ed5023e5d0b1b442fb0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Downloaded/Kings and Pigs/Sprites/01-King Human/Door In (78x58).png"
-dest_files=["res://.godot/imported/Door In (78x58).png-cae3bc5f0d2e899c8c6d9afb200ada43.ctex"]
+source_file="res://Characters/Items/Door/Sprites/Idle.png"
+dest_files=["res://.godot/imported/Idle.png-058aef4d86f61ed5023e5d0b1b442fb0.ctex"]
 
 [params]
 

@@ -16,7 +16,6 @@ func _process(_delta: float) -> void:
 func take_damage(base_damage: int, origin: Vector2 = Vector2.ZERO):
 	if (base_damage > 0):
 		var impact_point = to_local(origin).clamp(Vector2(-1, -1), Vector2.ONE)
-		print(impact_point)
 		animation_player.play('hit')
 		apply_central_impulse(Vector2(impact_point.x * -500, impact_point.y * -50))
 		apply_torque_impulse(500)

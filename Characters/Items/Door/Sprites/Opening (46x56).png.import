@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1glmrqalo0eg"
-path="res://.godot/imported/Idle.png-7262623a245ac3484ab3e8a616192202.ctex"
+uid="uid://dtse8v03eu0bq"
+path="res://.godot/imported/Opening (46x56).png-0537e29b00fc95a86cb949b22e870ad9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Downloaded/Kings and Pigs/Sprites/11-Door/Idle.png"
-dest_files=["res://.godot/imported/Idle.png-7262623a245ac3484ab3e8a616192202.ctex"]
+source_file="res://Characters/Items/Door/Sprites/Opening (46x56).png"
+dest_files=["res://.godot/imported/Opening (46x56).png-0537e29b00fc95a86cb949b22e870ad9.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtse8v03eu0bq"
-path="res://.godot/imported/Opening (46x56).png-9b7cae39cba6579d4cb7e9b39a513be1.ctex"
+uid="uid://btnx3i5bmda5f"
+path="res://.godot/imported/Door In (78x58).png-526128c6979cfe11c1e7c3bcd9176dda.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Downloaded/Kings and Pigs/Sprites/11-Door/Opening (46x56).png"
-dest_files=["res://.godot/imported/Opening (46x56).png-9b7cae39cba6579d4cb7e9b39a513be1.ctex"]
+source_file="res://Characters/Heroes/King/Sprites/Door In (78x58).png"
+dest_files=["res://.godot/imported/Door In (78x58).png-526128c6979cfe11c1e7c3bcd9176dda.ctex"]
 
 [params]
 

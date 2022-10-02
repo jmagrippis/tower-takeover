@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://c34jrxdn5pxkm"]
+
+[ext_resource type="Script" path="res://Characters/Particles/FootStep.gd" id="1_e173g"]
+
+[sub_resource type="Curve" id="Curve_5n38o"]
+max_value = 1.2
+_data = [Vector2(0, 0.265), 0.0, 0.0, 0, 0, Vector2(0.503106, 1.2), -1.932, -1.932, 0, 0, Vector2(1, 0.00600004), -7.7719, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_p6rhi"]
+colors = PackedColorArray(1, 1, 1, 0.941176, 1, 1, 1, 0.392157)
+
+[node name="FootStep" type="CPUParticles2D"]
+emitting = false
+amount = 4
+lifetime = 0.3
+one_shot = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2(0, -1)
+gravity = Vector2(0, 500)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+angular_velocity_min = 10.0
+angular_velocity_max = 20.0
+scale_amount_curve = SubResource("Curve_5n38o")
+color_ramp = SubResource("Gradient_p6rhi")
+script = ExtResource("1_e173g")
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

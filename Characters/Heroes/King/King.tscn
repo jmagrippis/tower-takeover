@@ -1,16 +1,21 @@
-[gd_scene load_steps=30 format=3 uid="uid://dsrlqiaseskjm"]
+[gd_scene load_steps=37 format=3 uid="uid://dsrlqiaseskjm"]
 
 [ext_resource type="Script" path="res://Characters/Heroes/King/King.gd" id="1_2mcx1"]
 [ext_resource type="Texture2D" uid="uid://b1xjlkrmog3wm" path="res://Characters/Heroes/King/Sprites/Idle (78x58).png" id="1_tsvar"]
 [ext_resource type="Texture2D" uid="uid://63cvp1trbcjg" path="res://Characters/Heroes/King/Sprites/Run (78x58).png" id="3_5u01i"]
 [ext_resource type="Script" path="res://Characters/HitBox.gd" id="3_cns7l"]
 [ext_resource type="Texture2D" uid="uid://dnlurhd10gp0m" path="res://Characters/Heroes/King/Sprites/Attack (78x58).png" id="4_288ph"]
+[ext_resource type="Script" path="res://Characters/InteractionComponent.gd" id="4_wn40c"]
 [ext_resource type="Texture2D" uid="uid://hkap7y1ja5qx" path="res://Characters/Heroes/King/Sprites/Jump (78x58).png" id="5_j18ln"]
 [ext_resource type="Texture2D" uid="uid://nsodalpxet27" path="res://Characters/Heroes/King/Sprites/Fall (78x58).png" id="6_ub61p"]
 [ext_resource type="Texture2D" uid="uid://fxdamj7cldp" path="res://Characters/Heroes/King/Sprites/Ground (78x58).png" id="7_cqj45"]
+[ext_resource type="Texture2D" uid="uid://btnx3i5bmda5f" path="res://Characters/Heroes/King/Sprites/Door In (78x58).png" id="10_sk5xu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ybe8"]
 size = Vector2(55, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t42na"]
+size = Vector2(25, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_33ifa"]
 size = Vector2(18, 22)
@@ -142,6 +147,46 @@ tracks/4/keys = {
 "values": [Vector2(55, 60), Vector2(40, 50)]
 }
 
+[sub_resource type="Animation" id="Animation_d2f4h"]
+resource_name = "entering_door"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterPivot/Sprite2d:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_sk5xu")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterPivot/Sprite2d:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CharacterPivot/Sprite2d:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
 [sub_resource type="Animation" id="Animation_rakcr"]
 resource_name = "fall"
 length = 0.1
@@ -221,6 +266,20 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_landing"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_6joxm"]
@@ -344,11 +403,32 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"spawn_foot_step"
+}, {
+"args": [],
+"method": &"spawn_foot_step"
+}, {
+"args": [],
+"method": &"spawn_foot_step"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5sxj6"]
 _data = {
 "RESET": SubResource("Animation_xpnbd"),
 "attack": SubResource("Animation_2hc0g"),
+"entering_door": SubResource("Animation_d2f4h"),
 "fall": SubResource("Animation_rakcr"),
 "grounded": SubResource("Animation_e4ov7"),
 "idle": SubResource("Animation_6joxm"),
@@ -364,6 +444,12 @@ animation = &"attack"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bmjto"]
 animation = &"grounded"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_alurl"]
+animation = &"entering_door"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_toih5"]
+animation = &"entering_door"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pt0v2"]
 animation = &"idle"
@@ -396,6 +482,15 @@ blend_point_1/pos = Vector2(0, 1)
 min_space = Vector2(-1, -0.9)
 blend_mode = 1
 
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_jl330"]
+enabled_inputs = 3
+input_0/name = "false"
+input_0/auto_advance = false
+input_1/name = "entering"
+input_1/auto_advance = false
+input_2/name = "exiting"
+input_2/auto_advance = false
+
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_sr5iq"]
 enabled_inputs = 3
 input_0/name = "idle"
@@ -406,7 +501,7 @@ input_2/name = "grounded"
 input_2/auto_advance = false
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_33kgn"]
-graph_offset = Vector2(-951.307, -140.508)
+graph_offset = Vector2(-279.015, 186.503)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_pt0v2")
 nodes/Animation/position = Vector2(-650, -220)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_83qfl")
@@ -415,15 +510,22 @@ nodes/Animation/position = Vector2(-650, -220)
 "nodes/Animation 3/position" = Vector2(-230, 260)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_bmjto")
 "nodes/Animation 4/position" = Vector2(-680, 70)
+"nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_alurl")
+"nodes/Animation 5/position" = Vector2(180, 260)
+"nodes/Animation 6/node" = SubResource("AnimationNodeAnimation_toih5")
+"nodes/Animation 6/position" = Vector2(296.985, 406.503)
 nodes/airborne/node = SubResource("AnimationNodeTransition_y0gxy")
 nodes/airborne/position = Vector2(-180, -30)
 nodes/attacking/node = SubResource("AnimationNodeTransition_7xkkf")
 nodes/attacking/position = Vector2(0, 110)
 nodes/fall/node = SubResource("AnimationNodeBlendSpace2D_8brti")
 nodes/fall/position = Vector2(-430, 140)
+nodes/interacting/node = SubResource("AnimationNodeTransition_jl330")
+nodes/interacting/position = Vector2(420, 80)
 nodes/movement/node = SubResource("AnimationNodeTransition_sr5iq")
 nodes/movement/position = Vector2(-410, -130)
-node_connections = [&"output", 0, &"attacking", &"airborne", 0, &"movement", &"airborne", 1, &"fall", &"attacking", 0, &"airborne", &"attacking", 1, &"Animation 3", &"movement", 0, &"Animation", &"movement", 1, &"Animation 2", &"movement", 2, &"Animation 4"]
+nodes/output/position = Vector2(790, 150)
+node_connections = [&"output", 0, &"interacting", &"airborne", 0, &"movement", &"airborne", 1, &"fall", &"attacking", 0, &"airborne", &"attacking", 1, &"Animation 3", &"interacting", 0, &"attacking", &"interacting", 1, &"Animation 5", &"interacting", 2, &"Animation 6", &"movement", 0, &"Animation", &"movement", 1, &"Animation 2", &"movement", 2, &"Animation 4"]
 
 [node name="King" type="CharacterBody2D"]
 script = ExtResource("1_2mcx1")
@@ -445,6 +547,14 @@ position = Vector2(12.5, 0)
 shape = SubResource("RectangleShape2D_8ybe8")
 disabled = true
 
+[node name="InteractionComponent" type="Area2D" parent="CharacterPivot/Sprite2d"]
+script = ExtResource("4_wn40c")
+interaction_parent = NodePath("../../..")
+
+[node name="InteractableCollisionShape2d" type="CollisionShape2D" parent="CharacterPivot/Sprite2d/InteractionComponent"]
+position = Vector2(-7.5, 2)
+shape = SubResource("RectangleShape2D_t42na")
+
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_33ifa")
@@ -462,4 +572,5 @@ process_callback = 0
 parameters/airborne/current = 1
 parameters/attacking/current = 0
 parameters/fall/blend_position = Vector2(0.00189269, 0.905263)
+parameters/interacting/current = 0
 parameters/movement/current = 0

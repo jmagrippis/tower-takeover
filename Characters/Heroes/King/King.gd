@@ -1,10 +1,11 @@
+class_name King
 extends CharacterBody2D
-
 
 const SPEED: float = 255.0
 const JUMP_VELOCITY: float = -350.0
 const FALL_GRAVITY_FACTOR: float = 1.40
 
+var foot_step: PackedScene = preload("res://Characters/Particles/FootStep.tscn")
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 # For one off landing effects
@@ -44,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * SPEED		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
@@ -77,3 +78,31 @@ func drop() -> void:
 	velocity.y = -JUMP_VELOCITY
 	position.y += 1
 	
+
+func spawn_foot_step() -> void:
+	var instance: CPUParticles2D = foot_step.instantiate()
+	instance.emitting = true
+	instance.position.y += 4
+	add_child(instance)
+
+
+func spawn_landing() -> void:
+	var right_instance: CPUParticles2D = foot_step.instantiate()
+	right_instance.emitting = true
+	right_instance.position.y += 4
+	right_instance.position.x += 4
+	add_child(right_instance)
+	
+	var left_instance: CPUParticles2D = foot_step.instantiate()
+	left_instance.emitting = true
+	left_instance.position.y += 4
+	left_instance.position.x -= 4
+	add_child(left_instance)
+
+
+func _on_door_entering(door: Door) -> void:
+	animation_tree.set("parameters/interacting/current", 1)
+	position.x = door.position.x
+	position.y = door.position.y
+	await get_tree().create_timer(1).timeout
+	queue_free()
